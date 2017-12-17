@@ -1,0 +1,20 @@
+*dynamic nor
+.include 'cmos.txt'
+.option post
+Vg G 0 pulse(0 5 1u 1u 1u 20u 40u)
+Vs S 0 5
+Va A 0 pulse(0 5 1u 1u 1u 10u 30u)
+Vb B 0 0
+m1 D G S S P_1u w=30u l=1u
+m2 D A K K N_1u w=20u l=1u
+m3 D B K K N_1u w=20u l=1u
+m4 K G 0 0 N_1u w=20u l=1u
+C D 0 120p
+.tran 10u 100u
+.measure tran tphl trig V(A) val=2.5 rise=1
++ targ V(D) val=2.5 fall=1
+.measure tran tplh trig V(A) val=2.5 fall=1
++ targ V(D) val=2.5 rise=1
+.measure tran tp param='(tphl+tplh)/2'
+.measure tran dypower avg P(D) from=0u to=100u
+.end 
